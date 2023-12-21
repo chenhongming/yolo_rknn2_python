@@ -5,6 +5,3 @@
 !target_weights/yolov5s_384_640_1.rknn
 !target_weights/yolov5s_384_640_1_encrypt.bin
 !target_weights/yolov5s_384_640_1_encrypt.rknn
-
-.idea
-

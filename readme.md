@@ -270,7 +270,7 @@ python export.py
 
 ### 🛠️ Deploy for yolov8 (version 8.0.220)
 
-#### 1. pytorch2torchscript
+#### 1. pytorch2torchscript or pytorch2onnx
 
 * Please clone the official repository of [YOLOv8](https://github.com/ultralytics/ultralytics.git) and install the [dependencies](https://github.com/ultralytics/ultralytics/blob/main/requirements.txt).
 
@@ -289,6 +289,27 @@ python export.py
   if rknn:
       f[12], _ = self.export_rknn()
   ```
+  
+* Note  **export torchscript for rknn**
+  ```
+  // add follow in 'class Exporter' *line 309*
+  
+  @try_export
+  def export_rknn(self, prefix=colorstr('RKNN:')):
+      """YOLOv8 RKNN model export."""
+      LOGGER.info(f'\n{prefix} starting export with torch {torch.__version__}...')
+  	
+      # export torchscript for rknn
+      ts = torch.jit.trace(self.model, self.im, strict=False)
+      f = str(self.file).replace(self.file.suffix, f'_rknn.torchscript')
+      torch.jit.save(ts, str(f))
+  
+      LOGGER.info(f'\n{prefix} feed {f} to RKNN-Toolkit or RKNN-Toolkit2 to generate RKNN model.\n'
+                  'Refer https://github.com/airockchip/rknn_model_zoo/tree/main/models/CV/object_detection/yolo')
+      return f, None
+  ```
+  
+* Note  **export onnx for rknn**
 
   ```
   // add follow in 'class Exporter' *line 309*
@@ -298,14 +319,34 @@ python export.py
       """YOLOv8 RKNN model export."""
       LOGGER.info(f'\n{prefix} starting export with torch {torch.__version__}...')
   
-      ts = torch.jit.trace(self.model, self.im, strict=False)
-      f = str(self.file).replace(self.file.suffix, f'_rknn.torchscript')
-      torch.jit.save(ts, str(f))
+      # export onnx for rknn
+      f = str(self.file).replace(self.file.suffix, f'_rknn.onnx')
+      try:
+          import onnx
   
-      LOGGER.info(f'\n{prefix} feed {f} to RKNN-Toolkit or RKNN-Toolkit2 to generate RKNN model.\n'
-                  'Refer https://github.com/airockchip/rknn_model_zoo/tree/main/models/CV/object_detection/yolo')
+          print('\nStarting ONNX export with onnx %s...' % onnx.__version__)
+          torch.onnx.export(self.model, self.im, f, verbose=False, opset_version=12, input_names=['images'],
+                            output_names=['output'])
+          # Checks
+          onnx_model = onnx.load(f)  # load onnx model
+          onnx.checker.check_model(onnx_model)  # check onnx model
+          # Simplify
+          try:
+              import onnxsim
+  
+              print(f'simplifying with onnx-simplifier {onnxsim.__version__}...')
+              model_onnx, check = onnxsim.simplify(onnx_model)
+              assert check, 'assert check failed'
+          except Exception as e:
+              print(f'simplifier failure: {e}')
+          print('ONNX export success, saved as %s' % f)
+      except Exception as e:
+          print('ONNX export failure: %s' % e)
       return f, None
   ```
+
+  
+
 
 * Modify ultralytics/nn/modules/head.py
 
@@ -331,7 +372,7 @@ python export.py
 
 * Copy the generated onnx model to [ir_weights]().
 
-#### 2. torchscript2rknn
+#### 2. torchscript2rknn or onnx2rknn
 
 * Generate a calibration dataset from the training or validation set via [utils/get_calibration.py](https://github.com/chenhongming/yolo_rknn_python/blob/main/utils/get_calibration.py).
 
