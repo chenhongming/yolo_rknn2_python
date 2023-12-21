@@ -81,7 +81,7 @@ from rknnlite.api import RKNN
 
 * Please clone the official repository of [yolov5](https://github.com/ultralytics/yolov5) and install the [dependencies](https://github.com/ultralytics/yolov5/blob/master/requirements.txt).
 
-* Copy the [cvt/export_yolov5.py](https://github.com/chenhongming/yolo_rknn2_python/cvt/export_yolov5.py) to the **root** directory of [yolov5](https://github.com/ultralytics/yolov5).
+* Copy the [cvt/export_yolov5.py](https://github.com/chenhongming/yolo_rknn2_python/blob/master/cvt/export_yolov5.py) to the **root** directory of [yolov5](https://github.com/ultralytics/yolov5).
 
 * Replace the official forward function of the Detect class in [models/yolo.py](https://github.com/ultralytics/yolov5/blob/master/models/yolo.py) with the following forward function.
 
@@ -103,13 +103,13 @@ python export_onnx.py --weights ./yolov5s.pt --img 640 640 --batch-size 1 --simp
 ```
 * The onnx model is stored in the same directory as the pytorch model.
 
-* Copy the generated onnx model to [ir_weights]().
+* Copy the generated onnx model to [ir_weights](https://github.com/chenhongming/yolo_rknn2_python/tree/master/ir_weights).
 
 
 
 #### 2. onnx2rknn
 
-* Generate a calibration dataset from the training or validation set via [utils/get_calibration.py](https://github.com/chenhongming/yolo_rknn_python/blob/main/utils/get_calibration.py).
+* Generate a calibration dataset from the training or validation set via [utils/get_calibration.py](https://github.com/chenhongming/yolo_rknn2_python/blob/master/utils/get_calibration.py).
 
 
 ```
@@ -120,7 +120,7 @@ python export_onnx.py --weights ./yolov5s.pt --img 640 640 --batch-size 1 --simp
 cd utils && python get_calibration.py
 ```
 
-* Run [export.py]() to generate the quantized rknn model(uint8).
+* Run [export.py](https://github.com/chenhongming/yolo_rknn2_python/blob/master/export.py) to generate the quantized rknn model(uint8).
 
 ```
 # params
@@ -231,19 +231,19 @@ python export.py
           return self.act(self.conv(x))
   ```
 
-* Copy the [cvt/export_yolov6.py](https://github.com/chenhongming/yolo_rknn2_python/cvt/export_yolov5.py) to the **tools** of [yolov6](https://github.com/meituan/YOLOv6).
+* Copy the [cvt/export_yolov6.py](https://github.com/chenhongming/yolo_rknn2_python/blob/master/cvt/export_yolov6.py) to the **tools** of [yolov6](https://github.com/meituan/YOLOv6).
 
 * python tools/export_yolov6.py --weights yolov6s.pt --img-size 384 640
 
 * The onnx model is stored in the same directory as the pytorch model.
 
-* Copy the generated onnx model to [ir_weights]().
+* Copy the generated onnx model to [ir_weights](https://github.com/chenhongming/yolo_rknn2_python/tree/master/ir_weights).
 
   
 
 #### 2. onnx2rknn
 
-* Generate a calibration dataset from the training or validation set via [utils/get_calibration.py](https://github.com/chenhongming/yolo_rknn_python/blob/main/utils/get_calibration.py).
+* Generate a calibration dataset from the training or validation set via [utils/get_calibration.py](https://github.com/chenhongming/yolo_rknn2_python/blob/master/utils/get_calibration.py).
 
 
 ```
@@ -254,7 +254,7 @@ python export.py
 cd utils && python get_calibration.py
 ```
 
-* Run [export.py]() to generate the quantized rknn model(uint8).
+* Run [export.py](https://github.com/chenhongming/yolo_rknn2_python/blob/master/export.py) to generate the quantized rknn model(uint8).
 
 ```
 # params
@@ -364,7 +364,7 @@ python export.py
       return y
   ```
 
-* Copy the [cvt/export_yolov8.py](https://github.com/chenhongming/yolo_rknn2_python/cvt/export_yolov8.py) to the **root** of [yolov8](https://github.com/ultralytics/ultralytics.git).
+* Copy the [cvt/export_yolov8.py](https://github.com/chenhongming/yolo_rknn2_python/blob/master/cvt/export_yolov8.py) to the **root** of [yolov8](https://github.com/ultralytics/ultralytics.git).
 
 * python export.py
 
@@ -374,7 +374,7 @@ python export.py
 
 #### 2. torchscript2rknn or onnx2rknn
 
-* Generate a calibration dataset from the training or validation set via [utils/get_calibration.py](https://github.com/chenhongming/yolo_rknn_python/blob/main/utils/get_calibration.py).
+* Generate a calibration dataset from the training or validation set via [utils/get_calibration.py](https://github.com/chenhongming/yolo_rknn2_python/blob/master/utils/get_calibration.py).
 
 
 ```
@@ -385,7 +385,7 @@ python export.py
 cd utils && python get_calibration.py
 ```
 
-* Run [export.py]() to generate the quantized rknn model(uint8).
+* Run [export.py](https://github.com/chenhongming/yolo_rknn2_python/blob/master/export.py) to generate the quantized rknn model(uint8).
 
 ```
 # params
@@ -408,5 +408,7 @@ python infer.py
 
 ### &ensp;  🔥 Infer for rknn(C++)
 
-[**yolo_rknn2_cpp**]()
+[**yolo_anchor_free**](https://github.com/chenhongming/yolo_anchor_free)
+
+[**yolov5**](https://github.com/chenhongming/yolov5)
 
