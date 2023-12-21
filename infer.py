@@ -8,8 +8,8 @@ BOX_THRESH = 0.5
 NMS_THRESH = 0.5
 QUANTIZE_ON = True
 
-data_set = '/data/database/public/calibration_data/coco_person_subset_1000.txt'
-# data_set = '/data/database/private/calibration_data/adas_1000.txt'
+# data_set = '/data/chm/database/public/calibration_data/coco_person_subset_1000.txt'
+data_set = '/data/chm/database/private/calibration_data/adas_1000.txt'
 # data_set = '/home/database/private/calibration_data/night_images2_subset_1000.txt'
 
 
@@ -594,9 +594,9 @@ class Detection:
 
 
 def main():
-    rknn_model = './target_weights/yolov8s_384_640_1.rknn'
-    ir_model = './ir_weights/yolov8s_384_640_1.onnx'
-    model_type = 'yolov8'
+    rknn_model = './target_weights/yolov5s_384_640_1.rknn'
+    ir_model = './ir_weights/yolov5s_384_640_1.onnx'
+    model_type = 'yolov5'
     model_input_shape = [1, 3, 384, 640]
 
     img_dir = './images/'
@@ -615,13 +615,13 @@ def main():
     # detect.test_ir_forward()
     # print('------- ir forward end -------', '\n')
 
-    # print('------- rknn forward start -------')
-    # detect.test_rknn_simulator_forward(time_elapsed_flag=False)
-    # print('------- rknn forward end-------')
-
     print('------- rknn forward start -------')
-    detect.test_rknn_rk3588_forward(time_elapsed_flag=False)
+    detect.test_rknn_simulator_forward(time_elapsed_flag=False)
     print('------- rknn forward end-------')
+
+    # print('------- rknn forward start -------')
+    # detect.test_rknn_rk3588_forward(time_elapsed_flag=False)
+    # print('------- rknn forward end-------')
 
 
 if __name__ == '__main__':

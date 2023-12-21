@@ -662,9 +662,11 @@ def main():
     model_type = 'yolov6'
     model_input_shape = [1, 3, 384, 640]
 
-    img_dir = '/media/smdt/B626954326950591/database/private/coco_val/images/val2017/'
+    # /home/aidong/newdisk2/chm/database/public/coco_val
+    # /media/smdt/B626954326950591/database/private/coco_val
+    img_dir = '/home/aidong/newdisk2/chm/database/public/coco_val/images/val2017/'
     save_dir = 'results/'
-    anno_json = '/media/smdt/B626954326950591/database/private/coco_val/annotations/instances_val2017.json'
+    anno_json = '/home/aidong/newdisk2/chm/database/public/coco_val/annotations/instances_val2017.json'
     verbose = False
 
     detect = Detection(rknn_model=rknn_model,
@@ -679,9 +681,9 @@ def main():
     detect.val_ir_forward(save_json=True, save_dir=save_dir, anno_json=anno_json)
     print('\t\t\t\t------- onnx forward end -------', '\n')
 
-    print('\t\t\t\t------- rknn forward start -------')
-    detect.val_rknn_rk3588_forward(save_json=True, save_dir=save_dir, anno_json=anno_json)
-    print('\t\t\t\t------- rknn forward end-------')
+    # print('\t\t\t\t------- rknn forward start -------')
+    # detect.val_rknn_rk3588_forward(save_json=True, save_dir=save_dir, anno_json=anno_json)
+    # print('\t\t\t\t------- rknn forward end-------')
 
 
 if __name__ == '__main__':

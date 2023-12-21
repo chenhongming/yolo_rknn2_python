@@ -3,12 +3,17 @@ from rknn.api import RKNN
 QUANTIZE_ON = True
 rknn_batch_size = 1
 
-# Model from https://github.com/airockchip/rknn_model_zoo
-IR_MODEL = './ir_weights/yolov8s_384_640_1.torchscript'
-RKNN_MODEL = f'./target_weights/yolov8s_384_640_{rknn_batch_size}.rknn'
+crypt = True
+crypt_level = 2  # 1, 2, 3
+crypt_type = 1
+crypt_suffix = ['rknn', 'bin']
 
-data_set = '/data/database/public/calibration_data/coco_person_subset_1000.txt'
-# data_set = '/data/database/private/calibration_data/adas_1000_.txt'
+# Model from https://github.com/airockchip/rknn_model_zoo
+IR_MODEL = './ir_weights/yolov5s_384_640_1.onnx'
+RKNN_MODEL = f'./target_weights/yolov5s_384_640_{rknn_batch_size}.rknn'
+
+# data_set = '/data/database/public/calibration_data/coco_person_subset_1000.txt'
+data_set = '/data/chm/database/private/calibration_data/adas_1000_.txt'
 
 
 if __name__ == '__main__':
@@ -66,6 +71,14 @@ if __name__ == '__main__':
     if ret != 0:
         print('Export rknn model failed!')
         exit(ret)
+    if crypt:
+        RKNN_MODEL_ENCRYPTED = RKNN_MODEL.replace('.rknn', f"_encrypt.{crypt_suffix[crypt_type]}")
+        ret = rknn.export_encrypted_rknn_model(RKNN_MODEL,
+                                               RKNN_MODEL_ENCRYPTED,
+                                               crypt_level)
+        if ret != 0:
+            print('Export encrypt rknn model failed!')
+            exit(ret)
     print('done')
 
     rknn.release()
