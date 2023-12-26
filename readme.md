@@ -408,7 +408,7 @@ python infer.py
 
 ### &ensp;  🔥 Infer for rknn(C++)
 
-[**yolo_anchor_free**](https://github.com/chenhongming/yolo_anchor_free)
+[**yolo_anchor_free(yolov6 && yolov8)**](https://github.com/chenhongming/yolo_anchor_free)
 
-[**yolov5**](https://github.com/chenhongming/yolov5)
+[**yolo_anchor_based(yolov5)**](https://github.com/chenhongming/yolo_anchor_based)
 
