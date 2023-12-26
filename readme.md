@@ -412,3 +412,12 @@ python infer.py
 
 [**yolo_anchor_based(yolov5)**](https://github.com/chenhongming/yolo_anchor_based)
 
+## 🤓 Reference
+
+
+* [yolov5](https://github.com/ultralytics/yolov5)
+* [YOLOv6](https://github.com/meituan/YOLOv6)
+* [ultralytics](https://github.com/ultralytics/ultralytics.git)
+* [rknn-toolkit2](https://github.com/rockchip-linux/rknn-toolkit2)
+* [rknpu2](https://github.com/rockchip-linux/rknpu2)
+* [rknn_model_zoo](https://github.com/airockchip/rknn_model_zoo)
